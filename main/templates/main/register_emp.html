@@ -1,0 +1,31 @@
+{% extends 'main/base.html'%}
+{% load static %}
+{% block tp %} <link rel="stylesheet" href=" {% static 'assets_register/style.css' %} "> {% endblock %}
+{% block title %}Регистрация соискателя {% endblock %}
+{% block pages %}
+<li><a  href="/register_apl" >Соискателям</a> </li>
+<li><a style="opacity: 1; text-decoration: underline;" href="/register_emp">Работодателям</a></li>
+{% endblock %}
+{% block reg_or_auth %}
+<div class="navbar-wrap">
+     <ul class="navbar-menu">
+         <li><a style="opacity: 1; text-decoration: underline;" href="/register_emp">Регистрация</a></li>
+         <li><a href="/login_emp">Авторизация</a></li>
+     </ul>
+ </div>
+{% endblock %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <ul>
+        {% for f in reguserform %}
+        <li type="none"> {{ f.label }}: {{ f }} </li>
+        {% endfor %}
+        {% for f in form %}
+        <li type="none"> {{ f.label }}: {{ f }} </li>
+        {% endfor %}
+        <li type="none"> <button type="submit">Рег</button> </li>
+    </ul>
+
+</form>
+{% endblock %}

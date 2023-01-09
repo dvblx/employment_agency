@@ -1,0 +1,65 @@
+{% extends 'main/base.html'%}
+{% load static %}
+{% block title %}Вакансии{% endblock %}
+{% block tp %} <link rel="stylesheet" href=" {% static 'assets_vacancies/style.css' %} "> {% endblock %}
+{% block pages %}
+<li><a style="opacity: 1; text-decoration: underline;" href="/vacancies" >Вакансии</a> </li>
+<li><a href="/employers">Работодатели</a></li>
+<li><a href="/applicants">Соискатели</a> </li>
+<li><a href="/deals">Сделки</a></li>
+{% endblock %}
+{% block content %}
+<div class="menu-list">
+    <form action="/vacancies" method="get">
+        <ul class="menuForm">
+            <li type="none"><p>Организация</p>
+            <ul>
+                {% if organizations %}
+                {% for organization in organizations %}
+                 <li style="font-size: 12px;" type="none"><input type="checkbox" class="checked" name = "organization"
+                                                                 value="{{organization.company_name}}">
+                <span> {{organization.company_name}} </span></li>
+                {% endfor %}
+                {% else %}
+                <li type="none"><p>Таблица бд пустая</p></li>
+                {% endif %}
+            </ul></li>
+            <li type="none"><p>Квалификация</p>
+            <ul>
+                {% if qualifications %}
+                {% for qualification in qualifications %}
+                 <li  style="font-size: 12px;" type="none"><input type="checkbox" class="checked" name = "qualification"
+                                                                  value="{{qualification.qualification_name}}">
+                <span>{{qualification.qualification_name}} </span></li>
+                {%endfor %}
+                {% else %}
+                <li type="none">
+                <p>Таблица бд пустая </p>
+                </li>
+                {% endif %}
+            </ul></li>
+            <li type="none"><p>Сортировать по зп</p>
+                <select name="sort" class="SelectBar">
+                    <option value="">Без сортировки</option>
+                    <option value="asc">По возрастанию</option>
+                    <option value="desc">По убыванию</option>
+                </select>
+            </li>
+        </ul>
+        <button type="submit" class="findButton">Найти</button>
+    </form>
+</div>
+<div class="pageContent">
+    <ul>
+         {% if queryset %}
+            {% for v in queryset %}
+            <li class="blockV" type="none">
+            <p>{{v}}</p>
+            </li>
+        {% endfor %}
+        {% endif %}
+    </ul>
+
+
+</div>
+{% endblock %}

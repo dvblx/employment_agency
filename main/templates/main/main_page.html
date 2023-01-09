@@ -1,0 +1,19 @@
+{% extends 'main/base.html'%}
+{% load static %}
+{% block title %}Главная{% endblock %}
+{% block tp %} <link rel="stylesheet" href=" {% static 'assets_mp/style.css' %} "> {% endblock %}
+{% block content %}
+    <h4 class="idkText">Я пока не придумал чё тут написать</h4>
+    <img class="imgBox" src="{% static 'assets_mp/kitten.jpg' %}">
+{% endblock %}
+{% block pages %}
+{% if request.user.is_authenticated %}
+<li><a href="/vacancies" >Вакансии</a> </li>
+<li><a href="/employers">Работодатели</a></li>
+<li><a href="/applicants">Соискатели</a> </li>
+<li><a href="/deals">Сделки</a></li>
+{% else %}
+<li><a href="/register_apl" >Соискателям</a> </li>
+<li><a href="/register_emp">Работодателям</a></li>
+{% endif %}
+{% endblock %}

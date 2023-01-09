@@ -1,0 +1,25 @@
+.navbar-menu {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+.navbar-menu li {
+    display: inline-block;
+}
+
+.navbar-menu li a{
+    display: inline-block;
+    color: #000;
+    opacity: 0.6;
+    text-decoration: none;
+    padding: 10px;
+    transition: all .07s ease-in-out;
+}
+.navbar-menu li a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+.navbar-wrap {
+    display: flex;
+    flex-flow: row nowrap;
+}

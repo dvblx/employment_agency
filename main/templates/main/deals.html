@@ -1,0 +1,55 @@
+{% extends 'main/base.html'%}
+{% load static %}
+{% block title %}Сделки{% endblock %}
+{% block tp %} <link rel="stylesheet" href=" {% static 'assets_deals/style.css' %} "> {% endblock %}
+{% block pages %}
+<li><a href="/vacancies" >Вакансии</a> </li>
+<li><a href="/employers">Работодатели</a></li>
+<li><a href="/applicants">Соискатели</a> </li>
+<li><a style="opacity: 1; text-decoration: underline;" href="/deals">Сделки</a></li>
+{% endblock %}
+{% block content %}
+<div class="searchAndFilter">
+    <ul class="SaF_Content">
+        <form action="/deals" method="get" >
+            <li type="none">Компания:</li>
+            <li type="none"><select name="employer" class="SelectBar">
+                <option value="">название компании</option>
+                {% for emp in employers %}
+                <option value="{{emp.company_name}}"> {{emp.company_name}}</option>
+                {% endfor %}
+            </select></li>
+            <li type="none">Вакансия:
+            <select name="vacancy" class="SelectBar">
+                <option value="">название вакансии</option>
+                {% for v in vacancies %}
+                <option value="{{v.profession_id.profession_name}}"> {{v.profession_id.profession_name}}</option>
+                {% endfor %}
+            </select>
+            </li>
+            <li type="none">Соискатель:
+                <input name="search3" class="SearchBox" placeholder=" данные о соискателе" type="search">
+            </li>
+            <button type="submit" class="findButton">Найти</button>
+        </form>
+    </ul>
+</div>
+<div class="DealsList">
+    {% if comission_agg %}
+    <h3 class="ComissionInfo"> Общий доход бюро: {{comission_agg.comission__sum}} ₽.
+        Средний доход бюро от одной сделки: {{comission_agg.comission__avg}} ₽.</h3>
+    {% else %}
+    <h3 class="ComissionInfo"> Общий доход бюро: 0 ₽.
+        Средний доход бюро от одной сделки: 0 ₽.</h3>
+    {% endif %}
+    {% if queryset %}
+    <ul>
+        {% for deal in queryset %}
+            <li type = "none" class="OneDeal"><p>{{deal}}</p></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p style="text-align:center;">По запросу ничего не найдено</p>
+    {% endif %}
+</div>
+{% endblock %}

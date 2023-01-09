@@ -1,0 +1,44 @@
+{% extends 'main/base.html'%}
+{% load static %}
+{% block title %}Работодатели{% endblock %}
+{% block tp %} <link rel="stylesheet" href=" {% static 'assets_emp/style.css' %} "> {% endblock %}
+{% block pages %}
+<li><a href="/vacancies" >Вакансии</a> </li>
+<li><a style="opacity: 1; text-decoration: underline;" href="/employers">Работодатели</a></li>
+<li><a href="/applicants">Соискатели</a> </li>
+<li><a href="/deals">Сделки</a></li>
+{% endblock %}
+{% block content %}
+<div class="searchAndFilter">
+    <ul class="SaF_Content">
+        <form action="/employers" method="get" >
+            <li type="none">Название:</li>
+            <li type="none"><input name="search" class="SearchBox" placeholder=" название компании" type="search"></li>
+            <li type="none">Вид деятельности:</li>
+            <li type="none"><select name="business" class="SelectBar">
+                <option value="" >вид деятельности</option>
+                {% if type_of_business %}
+                {% for tob in type_of_business %}
+                <option  value="{{tob.tob_name}}">{{tob.tob_name}}</option>
+                {% endfor %}
+                {% else %}
+                <option>В таблице пусто</option>
+                {% endif %}
+                </select>
+                    </li>
+            <button type="submit" class="findButton">Найти</button>
+        </form>
+    </ul>
+</div>
+<div class="EmployersList">
+    {% if queryset %}
+    <ul>
+        {% for employer in queryset %}
+            <li class="OneEmployer" type = "none" ><p>{{employer}}</p></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p style="text-align:center;">По запросу ничего не найдено</p>
+    {% endif %}
+</div>
+{% endblock %}

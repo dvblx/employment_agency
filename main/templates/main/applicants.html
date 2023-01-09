@@ -1,0 +1,67 @@
+{% extends 'main/base.html'%}
+{% load static %}
+{% block tp %} <link rel="stylesheet" href=" {% static 'assets_apl/style.css' %} "> {% endblock %}
+{% block title %}Соискатели{% endblock %}
+{% block pages %}
+<li><a href="/vacancies" >Вакансии</a> </li>
+<li><a href="/employers">Работодатели</a></li>
+<li><a style="opacity: 1; text-decoration: underline;" href="/applicants">Соискатели</a> </li>
+<li><a href="/deals">Сделки</a></li>
+{% endblock %}
+{% block content %}
+<div class="menu-list">
+    <form action="/applicants" method="get">
+        <ul class="menuForm">
+            <li type="none"><p>Профессия</p>
+            <ul>
+                {% if professions %}
+                {% for profession in professions %}
+                <li style="font-size: 12px;" type="none">
+                    <input type="checkbox" class="checked" name = "profession" value="{{profession.profession_name}}">
+                    <span> {{profession.profession_name}}</span>
+                </li>
+                {%endfor %}
+
+            {% else %}
+            <li style="font-size: 12px;" type="none"><p> Таблица бд пустая </p></li>
+            {% endif %}
+            </ul></li>
+            <li type="none"><p>Квалификация</p>
+            <ul>
+                {% if qualifications %}
+                {% for qualification in qualifications %}
+                 <li  style="font-size: 12px;" type="none"><input type="checkbox" class="checked" name = "qualification" value="{{qualification.qualification_name}}">
+                <span>{{qualification.qualification_name}} </span></li>
+                {%endfor %}
+                {% else %}
+                <li style="font-size: 12px;" type="none">
+                <p>Таблица бд пустая </p>
+                </li>
+                {% endif %}
+            </ul></li>
+            <li type="none" class="SearchBox">
+                <input name="search" class="SearchBox" placeholder=" дополнительно" type="search">
+            </li>
+        </ul>
+        <button type="submit" class="findButton">Найти</button>
+    </form>
+
+</div>
+<div class="pageContent">
+        <ul>
+            {% if queryset %}
+                {% for key, value in queryset.items %}
+                    {% if value %}
+                    <li class="blockV" type="none">
+                        <p>{{key}}. Образование:
+                        {% for v in value %}
+                            <p>{{v}}</p>
+                        {% endfor %}
+                        </p>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </ul>
+</div>
+{% endblock %}

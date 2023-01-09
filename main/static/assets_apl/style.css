@@ -1,0 +1,115 @@
+body{
+    position: relative;
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 16px;
+	line-height: 1.4;
+	color: #000;
+	min-width: 320px;
+	overflow-x: hidden;
+	height: auto;
+}
+/* Шапка начало */
+.navbar{
+    width: 100%;
+    height: 70px;
+    background-color: #94BDFA;
+
+}
+
+.navbar .container{
+    height: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-menu {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+.navbar-menu li {
+    display: inline-block;
+}
+
+.navbar-menu li a{
+    display: inline-block;
+    color: #000;
+    opacity: 0.6;
+    text-decoration: none;
+    padding: 10px;
+    transition: all .07s ease-in-out;
+}
+.navbar-menu li a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+.navbar-wrap {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 30px;
+    color: #000000;
+    text-decoration: none;
+}
+.navbar-brand: hover {
+    color: #232F95;
+}
+/* Шапка конец */
+
+.menu-list {
+    width: 220px;
+    height: 100%;
+    position: fixed;
+    z-index: 5;
+    background-color: #D0CFCF;
+    font-size: 14px;
+    border-right: 2px solid silver;
+}
+.menuForm{
+    margin-top: 10px;
+    text-indent: -10px;
+}
+.findButton {
+    width: 70px;
+    height: auto;
+    background-color: #E8EDF3;
+    margin-left: 20px;
+    border-radius: 15px;
+    border-width: 0px;
+}
+
+.SearchBox{
+    margin-top: 5px;
+    border-radius: 10px;
+    width: 90%;
+    border-width: 1px;
+}
+.pageContent {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: #FFF;
+    margin-left: 220px;
+}
+.blockV{
+    width: 80%;
+    height: auto;
+    display: block;
+    position: flex;
+    margin-top: 20px;
+    background-color: #B5CFF5;
+    border-radius: 10px;
+    border-color: black;
+    font-size: 17px;
+    text-indent: 20px;
+}
+
+.SelectBar{
+    border-radius: 15px;
+    width: 80%;
+    text-indent: 5px;
+}

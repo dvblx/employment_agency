@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-type" content="text/html" charset="utf-8" />
+    <meta name="description" content="" >
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    {% block tp %} {% endblock %}
+    <link rel="stylesheet" href="{% static 'assets_base/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets_base/bs1.css' %}">
+    <link rel="stylesheet" href="{% static 'assets_base/bs2.css' %}">
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="container">
+                <a href = "/" class="navbar-brand"> ХХру </a>
+                <div class="navbar-wrap">
+                    <ul class="navbar-menu">
+                        {% block pages %} {% endblock %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% block reg_or_auth %}{% endblock %}
+    {% block content %}{% endblock %}
+</body>
+</html>
