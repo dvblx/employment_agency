@@ -142,8 +142,11 @@ class ApplicantsView(ListView):
         search_query_other_data = self.request.GET.get('search', '')
         search_query_profession = self.request.GET.getlist("profession")
         search_query_qualification = self.request.GET.getlist("qualification")
-        #search_query_min_exp = self.request.GET('months', '')
-        search_query_min_exp = ''
+        search_query_min_exp = self.request.GET.get('months', '')
+        try:
+            search_query_min_exp = int(search_query_min_exp)
+        except ValueError:
+            search_query_min_exp = ''
         queryset = Education.objects.all()
         if search_query_other_data:
             queryset = queryset.filter(Q(applicant_id__other_data__icontains=search_query_other_data))
