@@ -13,4 +13,5 @@ urlpatterns = [
     path('register_emp2', RegisterEmployer2.as_view(), name='register_emp2'),
     path('login_apl', LoginApplicant.as_view(), name='login_apl'),
     path('login_emp', LoginEmployer.as_view(), name='login_emp'),
+    path('applicant/<int:pk>', OneApplicantView.as_view(), name='one_applicant'),
 ]

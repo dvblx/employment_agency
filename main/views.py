@@ -2,7 +2,7 @@ from django.contrib.auth.views import LoginView
 from django.db.models import Q, Sum, Avg
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, TemplateView, CreateView
+from django.views.generic import ListView, TemplateView, CreateView, DetailView
 from django.contrib.auth import login, logout
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -15,14 +15,14 @@ class MainPageView(TemplateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = UserAndHisType.objects.get(user=self.request.user)
+        if self.request.user.id:
+            context['current_user'] = UserAndHisType.objects.get(user=self.request.user)
         return context
 
 
 class RegisterApplicant(CreateView):
     form_class = RegisterUserForm
     template_name = "main/register_apl.html"
-    #success_url = reverse_lazy('login')
 
     def form_valid(self, form):
         new_user = form.save()
@@ -225,3 +225,35 @@ class DealsView(ListView):
                 Q(applicant_id__other_data__icontains=search_query3)
             )
         return queryset
+
+
+class OneApplicantView(DetailView):
+    template_name = "main/one_applicant.html"
+    model = User
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #context['summaries'] = Summary.objects.filter()
+        context['apl'] = Applicant.objects.get(user=self.request.user)
+        return context
+
+
+class OneSummaryView(DetailView):
+    template_name = "main/one_summary.html"
+    model = Summary
+
+
+class OneEmployerView(DetailView):
+    template_name = "main/one_employer.html"
+    model = User
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['emp'] = Employer.objects.get(user=self.request.user)
+        #context['vacancies'] = Vacancy.objects.filter()
+        return context
+
+
+class OneVacancyView(DetailView):
+    template_name = "main/one_vacancy.html"
+    model = Vacancy

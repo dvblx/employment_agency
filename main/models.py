@@ -116,5 +116,22 @@ class UserAndHisType(models.Model):
     type_of_user = models.CharField(max_length=3, choices=Type_Choices, verbose_name="Тип пользователя",
                                     default=APPLICANT)
 
+    def __str__(self):
+        return f"{self.user} - {self.type_of_user}"
+
+
+class Summary(models.Model):
+    applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE, verbose_name="Соискатель")
+    skills = models.CharField(max_length=60, blank=True, verbose_name='Ключевые навыки')
+    information_about_yourself = models.TextField(verbose_name="О себе")
+    work_experience_information = models.TextField(blank=True, verbose_name="Об опыте работы")
+    education = models.ForeignKey(Education, on_delete=models.CASCADE, verbose_name="Образование")
+    additional_education = models.FileField(upload_to='certificates', blank=True, null=True)
+
+    def __str__(self):
+        if self.work_experience_information:
+            return f'{self.applicant}\nО себе:\n {self.information_about_yourself}\nПредыдущий опыт работы:\n' \
+                   f'{self.work_experience_information}'
+        return f'{self.applicant}\n О себе:\n {self.information_about_yourself}\n'
 
 
