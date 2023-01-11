@@ -3,10 +3,27 @@
 {% block title %}Вакансии{% endblock %}
 {% block tp %} <link rel="stylesheet" href=" {% static 'assets_vacancies/style.css' %} "> {% endblock %}
 {% block pages %}
+{% if request.user.is_authenticated %}
+{% if current_user.type_of_user == 'MDR' %}
 <li><a style="opacity: 1; text-decoration: underline;" href="/vacancies" >Вакансии</a> </li>
 <li><a href="/employers">Работодатели</a></li>
 <li><a href="/applicants">Соискатели</a> </li>
 <li><a href="/deals">Сделки</a></li>
+{% elif current_user.type_of_user == 'APL' %}
+<li><a style="opacity: 1; text-decoration: underline;" href="/vacancies" >Вакансии</a> </li>
+<li><a href="#" >Ваши резюме</a> </li>
+<li><a href="#" >Отклики работодателей</a> </li>
+<li><a href="#" >Профиль</a> </li>
+{% elif current_user.type_of_user == 'EMP' %}
+<li><a href="/applicants">Соискатели</a> </li>
+<li><a href="#" >Ваши вакансии</a> </li>
+<li><a href="#" >Отклики соискателей</a> </li>
+<li><a href="#" >Профиль</a> </li>
+{% endif %}
+{% else %}
+<li><a href="/register_apl" >Соискателям</a> </li>
+<li><a href="/register_emp">Работодателям</a></li>
+{% endif %}
 {% endblock %}
 {% block content %}
 <div class="menu-list">

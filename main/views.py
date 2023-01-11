@@ -13,6 +13,11 @@ from .forms import *
 class MainPageView(TemplateView):
     template_name = "main/main_page.html"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_user'] = UserAndHisType.objects.get(user=self.request.user)
+        return context
+
 
 class RegisterApplicant(CreateView):
     form_class = RegisterUserForm
@@ -94,6 +99,7 @@ class VacanciesView(ListView):
         context = super().get_context_data(**kwargs)
         context['organizations'] = Employer.objects.all()
         context['qualifications'] = Qualifications.objects.all()
+        context['current_user'] = UserAndHisType.objects.get(user=self.request.user)
         return context
 
     def get_queryset(self):
@@ -129,6 +135,7 @@ class ApplicantsView(ListView):
         context['professions'] = Professions.objects.all()
         context['qualifications'] = Qualifications.objects.all()
         context['applicant'] = Applicant.objects.all()
+        context['current_user'] = UserAndHisType.objects.get(user=self.request.user)
         return context
 
     def get_queryset(self):
@@ -164,6 +171,7 @@ class EmployersView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['type_of_business'] = TypeOfBusiness.objects.all()
+        context['current_user'] = UserAndHisType.objects.get(user=self.request.user)
         return context
 
     def get_queryset(self):
@@ -190,6 +198,7 @@ class DealsView(ListView):
             context['comission_agg'] = False
         context['employers'] = Employer.objects.all()
         context['vacancies'] = Vacancy.objects.all()
+        context['current_user'] = UserAndHisType.objects.get(user=self.request.user)
         return context
 
     def get_queryset(self):
