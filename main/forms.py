@@ -35,5 +35,10 @@ class EmployerForm(forms.ModelForm):
 class VacancyForm(forms.ModelForm):
     class Meta:
         model = Vacancy
-        fields = '__all__'
+        exclude = ['employer_id']
 
+
+class SummaryForm(forms.ModelForm):
+    class Meta:
+        model = Summary
+        exclude = ['applicant', 'additional_education']

@@ -11,13 +11,8 @@
 <li><a href="/deals">Сделки</a></li>
 {% elif current_user.type_of_user == 'APL' %}
 <li><a style="opacity: 1; text-decoration: underline;" href="/vacancies" >Вакансии</a> </li>
-<li><a href="#" >Ваши резюме</a> </li>
+<li><a href="/applicant/summaries" >Ваши резюме</a> </li>
 <li><a href="#" >Отклики работодателей</a> </li>
-<li><a href="#" >Профиль</a> </li>
-{% elif current_user.type_of_user == 'EMP' %}
-<li><a href="/applicants">Соискатели</a> </li>
-<li><a href="#" >Ваши вакансии</a> </li>
-<li><a href="#" >Отклики соискателей</a> </li>
 <li><a href="#" >Профиль</a> </li>
 {% endif %}
 {% else %}

@@ -1,7 +1,7 @@
 {% extends 'main/login_emp.html'%}
 {% load static %}
 {% block tp %} <link rel="stylesheet" href=" {% static 'assets_register/style.css' %} "> {% endblock %}
-{% block title %}Регистрация соискателя {% endblock %}
+{% block title %}Авторизация {% endblock %}
 {% block pages %}
 {% if request.user.is_authenticated %}
 {% if current_user.type_of_user == 'MDR' %}

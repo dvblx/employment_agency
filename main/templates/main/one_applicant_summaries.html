@@ -1,6 +1,6 @@
 {% extends 'main/base.html'%}
 {% load static %}
-{% block title %} Резюме {{ summary.desired_position }} {% endblock %}
+{% block title %}Резюме {{ apl.l_name }} {{ apl.f_name|slice:":1" }}. {{ apl.p_name|slice:":1" }}. {% endblock %}
 {% block tp %} <link rel="stylesheet" href=" {% static 'assets_vacancies/style.css' %} "> {% endblock %}
 {% block pages %}
 {% if request.user.is_authenticated %}
@@ -11,7 +11,7 @@
 <li><a href="/deals">Сделки</a></li>
 {% elif current_user.type_of_user == 'APL' %}
 <li><a href="/vacancies" >Вакансии</a> </li>
-<li><a href="/applicant/summaries" >Ваши резюме</a> </li>
+<li><a style="opacity: 1; text-decoration: underline;" href="/applicant/summaries" >Ваши резюме</a> </li>
 <li><a href="#" >Отклики работодателей</a> </li>
 <li><a href="/applicant/{{current_user.id}}" >Профиль</a> </li>
 {% endif %}
@@ -20,7 +20,15 @@
 <li><a href="/register_emp">Работодателям</a></li>
 {% endif %}
 {% endblock %}
-
 {% block content %}
-<p>{{summary}}</p>
+<a href="/create_summary">Новое резюме</a>
+{% if queryset %}
+<ul>
+    {% for summary in queryset %}
+    <li type="none"><a href = "/applicant/summaries/{{summary.pk}}"> {{ summary.desired_position }} </a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>У соискателя {{ apl.l_name }} {{ apl.f_name|slice:":1" }}. {{ apl.p_name|slice:":1" }}. пока нет резюме</p>
+{% endif %}
 {% endblock %}

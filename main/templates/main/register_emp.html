@@ -1,7 +1,7 @@
 {% extends 'main/base.html'%}
 {% load static %}
 {% block tp %} <link rel="stylesheet" href=" {% static 'assets_register/style.css' %} "> {% endblock %}
-{% block title %}Регистрация соискателя {% endblock %}
+{% block title %}Регистрация работодателя {% endblock %}
 {% block pages %}
 {% if request.user.is_authenticated %}
 {% if current_user.type_of_user == 'MDR' %}
@@ -37,9 +37,6 @@
 <form method="post">
     {% csrf_token %}
     <ul>
-        {% for f in reguserform %}
-        <li type="none"> {{ f.label }}: {{ f }} </li>
-        {% endfor %}
         {% for f in form %}
         <li type="none"> {{ f.label }}: {{ f }} </li>
         {% endfor %}

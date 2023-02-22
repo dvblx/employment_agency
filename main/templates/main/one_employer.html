@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'main/base.html'%}
+{% load static %}
+{% block title %}{{ emp.company_name }}{% endblock %}
+{% block tp %} <link rel="stylesheet" href=" {% static 'assets_mp/style.css' %} "> {% endblock %}
+{% block pages %}
+{% if request.user.is_authenticated %}
+{% if current_user.type_of_user == 'MDR' %}
+<li><a href="/vacancies" >Вакансии</a> </li>
+<li><a href="/employers">Работодатели</a></li>
+<li><a href="/applicants">Соискатели</a> </li>
+<li><a href="/deals">Сделки</a></li>
+{% elif current_user.type_of_user == 'EMP' %}
+<li><a href="/applicants">Соискатели</a> </li>
+<li><a href="/employer/vacancies" >Ваши вакансии</a> </li>
+<li><a href="#" >Отклики соискателей</a> </li>
+<li><a style="opacity: 1; text-decoration: underline;" href="/employer/{{current_user.id}}" >Профиль</a> </li>
+{% endif %}
+{% else %}
+<li><a href="/register_apl" >Соискателям</a> </li>
+<li><a href="/register_emp">Работодателям</a></li>
+{% endif %}
+{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<h4>Информация о работодателе {{ emp.company_name }}</h4>
+<h5>Вид деятельности: {{emp.type_of_business}}</h5>
+<p><b>Адрес:</b> {{emp.address}}</p>
+{% if emp.phone != "Не указан" %}
+<p><b>Номер телефона:</b> {{ emp.phone }}</p>
+{% endif %}
+{% if emp.other_contact_information != "Не указано"%}
+<p><b>Другие контактные данные:</b>{{ emp.other_contact_information }}</p>
+{% endif %}
+
+{% endblock %}

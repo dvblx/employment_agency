@@ -1,24 +1,19 @@
 {% extends 'main/base.html'%}
 {% load static %}
-{% block title %}Вакансии{% endblock %}
+{% block title %}{{ apl.l_name }} {{ apl.f_name|slice:":1" }}. {{ apl.p_name|slice:":1" }}.{% endblock %}
 {% block tp %} <link rel="stylesheet" href=" {% static 'assets_vacancies/style.css' %} "> {% endblock %}
 {% block pages %}
 {% if request.user.is_authenticated %}
 {% if current_user.type_of_user == 'MDR' %}
-<li><a style="opacity: 1; text-decoration: underline;" href="/vacancies" >Вакансии</a> </li>
+<li><a href="/vacancies" >Вакансии</a> </li>
 <li><a href="/employers">Работодатели</a></li>
 <li><a href="/applicants">Соискатели</a> </li>
 <li><a href="/deals">Сделки</a></li>
 {% elif current_user.type_of_user == 'APL' %}
 <li><a href="/vacancies" >Вакансии</a> </li>
-<li><a href="#" >Ваши резюме</a> </li>
+<li><a href="/applicant/summaries" >Ваши резюме</a> </li>
 <li><a href="#" >Отклики работодателей</a> </li>
-<li><a style="opacity: 1; text-decoration: underline;" href="#" >Профиль</a> </li>
-{% elif current_user.type_of_user == 'EMP' %}
-<li><a href="/applicants">Соискатели</a> </li>
-<li><a href="#" >Ваши вакансии</a> </li>
-<li><a href="#" >Отклики соискателей</a> </li>
-<li><a href="#" >Профиль</a> </li>
+<li><a style="opacity: 1; text-decoration: underline;" href="/applicant/{{current_user.id}}" >Профиль</a> </li>
 {% endif %}
 {% else %}
 <li><a href="/register_apl" >Соискателям</a> </li>
@@ -26,5 +21,27 @@
 {% endif %}
 {% endblock %}
 {% block content %}
-<p>Информация о соискателе {{ apl }}</p>
+<h4>Информация о соискателе {{ apl.l_name }} {{ apl.f_name|slice:":1" }}. {{ apl.p_name|slice:":1" }}.</h4>
+<h5>Возраст: {{ apl.age }} лет</h5>
+<h5>Опыт работы: {{ apl.experience }}</h5>
+<h5>Образование: </h5>
+<ul>
+    {% for e in education %}
+    <li type="none"><p>{{ e.qualification_id }}: {{ e.profession_id }}</p></li>
+    {% endfor %}
+</ul>
+
+<p>О себе: {{ apl.other_data }}</p>
+<h5>Резюме: </h5>
+
+<ul>
+    {% if summaries %}
+    {% for s in summaries %}
+    <li type="none"><a><p>Желаемая позиция</p></a></li>
+    {% endfor %}
+    {% else %}
+    <p>У вас пока нет резюме</p>
+    {% endif %}
+</ul>
+
 {% endblock %}

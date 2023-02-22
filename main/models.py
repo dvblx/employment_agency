@@ -122,6 +122,7 @@ class UserAndHisType(models.Model):
 
 class Summary(models.Model):
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE, verbose_name="Соискатель")
+    desired_position = models.CharField(max_length=50, default='Начинающий специалист', verbose_name='Желаемая должность')
     skills = models.CharField(max_length=60, blank=True, verbose_name='Ключевые навыки')
     information_about_yourself = models.TextField(verbose_name="О себе")
     work_experience_information = models.TextField(blank=True, verbose_name="Об опыте работы")
@@ -130,8 +131,9 @@ class Summary(models.Model):
 
     def __str__(self):
         if self.work_experience_information:
-            return f'{self.applicant}\nО себе:\n {self.information_about_yourself}\nПредыдущий опыт работы:\n' \
-                   f'{self.work_experience_information}'
-        return f'{self.applicant}\n О себе:\n {self.information_about_yourself}\n'
+            return f'{self.applicant}\nЖелаемая должность: {self.desired_position}\nО себе:\n' \
+                   f' {self.information_about_yourself}\nПредыдущий опыт работы:\n{self.work_experience_information}'
+        return f'{self.applicant}\nЖелаемая должность: {self.desired_position}\nО себе:\n' \
+               f' {self.information_about_yourself}\n'
 
 

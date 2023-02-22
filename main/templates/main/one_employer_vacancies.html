@@ -1,7 +1,7 @@
 {% extends 'main/base.html'%}
 {% load static %}
-{% block title %}{{ vacancy.profession_id }}{% endblock %}
-{% block tp %} <link rel="stylesheet" href=" {% static 'assets_mp/style.css' %} "> {% endblock %}
+{% block tp %} <link rel="stylesheet" href=" {% static 'assets_apl/style.css' %} "> {% endblock %}
+{% block title %}Вакансии {{emp.company_name}} {% endblock %}
 {% block pages %}
 {% if request.user.is_authenticated %}
 {% if current_user.type_of_user == 'MDR' %}
@@ -11,7 +11,7 @@
 <li><a href="/deals">Сделки</a></li>
 {% elif current_user.type_of_user == 'EMP' %}
 <li><a href="/applicants">Соискатели</a> </li>
-<li><a href="/employer/vacancies" >Ваши вакансии</a> </li>
+<li><a style="opacity: 1; text-decoration: underline;" href="/employer/vacancies" >Ваши вакансии</a> </li>
 <li><a href="#" >Отклики соискателей</a> </li>
 <li><a href="/employer/{{current_user.id}}" >Профиль</a> </li>
 {% endif %}
@@ -20,7 +20,17 @@
 <li><a href="/register_emp">Работодателям</a></li>
 {% endif %}
 {% endblock %}
-
 {% block content %}
-<p>{{vacancy}}</p>
+<a href="/create_vacancy">Разместить вакансию</a>
+{% if queryset %}
+<ul>
+    {% for vacancy in queryset %}
+    <li type="none">
+        <a href = "/employer/vacancies/{{vacancy.pk}}">{{vacancy.profession_id}}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>У работодателя {{ emp.company_name }} пока нет открытых вакансй</p>
+{% endif %}
 {% endblock %}

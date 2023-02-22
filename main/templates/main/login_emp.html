@@ -1,6 +1,6 @@
 {% extends 'main/base.html'%}
 {% load static %}
-{% block title %}Регистрация соискателя {% endblock %}
+{% block title %}Авторизация {% endblock %}
 {% block pages %}
 {% if request.user.is_authenticated %}
 {% if current_user.type_of_user == 'MDR' %}

@@ -233,14 +233,38 @@ class OneApplicantView(DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        #context['summaries'] = Summary.objects.filter()
         context['apl'] = Applicant.objects.get(user=self.request.user)
+        context['current_user'] = UserAndHisType.objects.get(user=self.request.user)
+        context['education'] = Education.objects.filter(applicant_id=context['apl'])
+        context['summaries'] = Summary.objects.filter(applicant=context['apl'])
+        return context
+
+
+class OneApplicantSummariesView(ListView):
+    template_name = "main/one_applicant_summaries.html"
+    model = Summary
+    context_object_name = 'queryset'
+
+    def get_queryset(self):
+        applicant = Applicant.objects.get(user=self.request.user)
+        queryset = Summary.objects.filter(applicant=applicant)
+        return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['apl'] = Applicant.objects.get(user=self.request.user)
+        context['current_user'] = UserAndHisType.objects.get(user=self.request.user)
         return context
 
 
 class OneSummaryView(DetailView):
     template_name = "main/one_summary.html"
     model = Summary
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_user'] = UserAndHisType.objects.get(user=self.request.user)
+        return context
 
 
 class OneEmployerView(DetailView):
@@ -250,10 +274,59 @@ class OneEmployerView(DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['emp'] = Employer.objects.get(user=self.request.user)
-        #context['vacancies'] = Vacancy.objects.filter()
+        context['current_user'] = UserAndHisType.objects.get(user=self.request.user)
+        context['vacancies'] = Vacancy.objects.filter(employer_id=context['emp'])
+        return context
+
+
+class OneEmployerVacanciesView(ListView):
+    template_name = "main/one_employer_vacancies.html"
+    model = Vacancy
+    context_object_name = 'queryset'
+
+    def get_queryset(self):
+        employer = Employer.objects.get(user=self.request.user)
+        queryset = Vacancy.objects.filter(employer_id=employer)
+        return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['emp'] = Employer.objects.get(user=self.request.user)
+        context['current_user'] = UserAndHisType.objects.get(user=self.request.user)
         return context
 
 
 class OneVacancyView(DetailView):
     template_name = "main/one_vacancy.html"
     model = Vacancy
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_user'] = UserAndHisType.objects.get(user=self.request.user)
+        return context
+
+
+class AddSummaryView(CreateView):
+    form_class = SummaryForm
+    template_name = 'main/add_summary.html'
+
+    def form_valid(self, form):
+        apl = Applicant.objects.get(user=self.request.user)
+        Summary.objects.create(applicant=apl, desired_position=form.cleaned_data['desired_position'],
+                               skills=form.cleaned_data['skills'],
+                               information_about_yourself=form.cleaned_data['information_about_yourself'],
+                               work_experience_information=form.cleaned_data['work_experience_information'],
+                               education=form.cleaned_data['education'])
+        return redirect('o_a_summaries')
+
+
+class AddVacancyView(CreateView):
+    form_class = VacancyForm
+    template_name = 'main/add_vacancy.html'
+
+    def form_valid(self, form):
+        emp = Employer.objects.get(user=self.request.user)
+        Vacancy.objects.create(profession_id=form.cleaned_data['profession_id'],
+                               vacancy_about=form.cleaned_data['vacancy_about'], salary=form.cleaned_data['salary'],
+                               employer_id=emp, minimum_qualification=form.cleaned_data['minimum_qualification'])
+        return redirect('o_e_vacancies')
